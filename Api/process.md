@@ -9,3 +9,6 @@
   - Configure launchSettings.json
 	- "launchBrowser": true,
 	- "launchUrl": "swagger"
+3. Created new controller with endpoints (for now only returns OK status)
+  - POST images/process?encoding={encoding} Form: IFormFile file
+  - I removed the Attributes from parameters, because they causes errors with Swagger

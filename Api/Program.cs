@@ -13,8 +13,8 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwagger();   // Generates JSON at /swagger/v1/swagger.json
+    app.UseSwaggerUI(); // Swagger UI at /swagger
 }
 
 app.UseHttpsRedirection();
