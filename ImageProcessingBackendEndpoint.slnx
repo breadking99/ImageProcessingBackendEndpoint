@@ -4,6 +4,8 @@
     <Platform Name="x64" />
     <Platform Name="x86" />
   </Configurations>
-  <Project Path="Api/Api.csproj" Id="dd6df5a5-7dfb-45b7-8f0e-8653f6211d37" />
+  <Project Path="Api/Api.csproj" Id="dd6df5a5-7dfb-45b7-8f0e-8653f6211d37">
+    <BuildDependency Project="Dll/Dll.vcxproj" />
+  </Project>
   <Project Path="Dll/Dll.vcxproj" Id="64bac813-42df-475d-a468-0974af6025eb" />
 </Solution>
