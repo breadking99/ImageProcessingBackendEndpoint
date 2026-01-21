@@ -24,7 +24,13 @@ public class ImageController : ControllerBase
 
         if (!isAcceptableType) return BadRequest("Unsupported encoding type.");
 
-        return Ok();
+        Stream stream = file.OpenReadStream();
+        stream = DllNative.ProcessImage(stream, encoding);
+        string contenType = encoding
+            .PossibleContentTypes()
+            .FirstOrDefault() ?? "image/png";
+
+        return File(stream, contenType);
     }
 
     [HttpGet("test/multiple-by-two")]
