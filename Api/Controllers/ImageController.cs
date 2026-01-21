@@ -9,7 +9,23 @@ namespace Api.Controllers;
 public class ImageController : ControllerBase
 {
     [HttpPost("processing")]
-    public IActionResult Post_Processing(IFormFile file, EEncodingType encoding) => Ok();
+    public IActionResult Post_Processing(IFormFile file, EEncodingType encoding)
+    {
+        bool isAcceptableType = false;
+
+        foreach (EEncodingType type in Enum.GetValues<EEncodingType>())
+        {
+            bool isMatch = type
+                .PossibleContentTypes()
+                .Any(x => x.Equals(file.ContentType, StringComparison.OrdinalIgnoreCase));
+
+            if (isMatch) isAcceptableType = true;
+        }
+
+        if (!isAcceptableType) return BadRequest("Unsupported encoding type.");
+
+        return Ok();
+    }
 
     [HttpGet("test/multiple-by-two")]
     public IActionResult Get_Test_MultipleByTwo([FromQuery] int value)
