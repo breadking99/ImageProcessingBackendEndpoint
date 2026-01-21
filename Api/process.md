@@ -12,3 +12,4 @@
 3. Created new controller with endpoints (for now only returns OK status)
   - POST images/process?encoding={encoding} Form: IFormFile file
   - I removed the Attributes from parameters, because they causes errors with Swagger
+4. Added C++ DLL project to the solution
