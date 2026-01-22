@@ -8,4 +8,5 @@
     <BuildDependency Project="Dll/Dll.vcxproj" />
   </Project>
   <Project Path="Dll/Dll.vcxproj" Id="64bac813-42df-475d-a468-0974af6025eb" />
+  <Project Path="Tests/Tests.csproj" Id="8a2427a1-2a99-4c7f-bd91-0ab5d15c8c38" />
 </Solution>

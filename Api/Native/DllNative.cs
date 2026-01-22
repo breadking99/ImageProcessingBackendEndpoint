@@ -12,4 +12,12 @@ public static class DllNative
 
     [DllImport(DllPath)]
     public static extern void FreeBuffer(IntPtr p);
+
+    [DllImport(DllPath)]
+    public static extern IntPtr ProcessImage(
+        byte[] input,
+        int inputLength,
+        EEncodingType encoding,
+        [MarshalAs(UnmanagedType.I1)] bool blur,
+        out int outputLength);
 }

@@ -17,6 +17,31 @@ enum EEncodingType
     JPG
 };
 
+EXPORTED_METHOD unsigned char* __cdecl ProcessImage(
+    const unsigned char* input,
+    int inputLength,
+    EEncodingType /*encoding*/,
+    bool /*blur*/,
+    int* outputLength)
+{
+    if (!input || inputLength <= 0 || !outputLength)
+    {
+        if (outputLength) { *outputLength = 0; }
+        return nullptr;
+    }
+
+    auto* output = static_cast<unsigned char*>(std::malloc(static_cast<size_t>(inputLength)));
+    if (!output)
+    {
+        *outputLength = 0;
+        return nullptr;
+    }
+
+    std::memcpy(output, input, static_cast<size_t>(inputLength));
+    *outputLength = inputLength;
+    return output;
+}
+
 EXPORTED_METHOD void __cdecl FreeBuffer(void* p)
 {
 	std::free(p);
