@@ -4,6 +4,7 @@
 #include <cstring>
 #include <cstdlib>
 #include <vector>
+#include <opencv2/core.hpp>
 #include <opencv2/imgcodecs.hpp>
 #include <opencv2/imgproc.hpp>
 
@@ -37,10 +38,54 @@ static bool TryDecodeImage(const unsigned char* input, int inputLength, cv::Mat&
     return !output.empty();
 }
 
-static void ApplyGaussianBlur(cv::Mat& image)
+static void ApplyGaussianBlur(const cv::Mat& input, cv::Mat& output)
 {
     cv::setNumThreads(cv::getNumberOfCPUs());
-    cv::GaussianBlur(image, image, cv::Size(5, 5), 0.0, 0.0, cv::BORDER_DEFAULT);
+    const cv::Size kernelSize(5, 5);
+    const int radius = kernelSize.width / 2;
+
+    if (input.cols <= kernelSize.width || input.rows <= kernelSize.height)
+    {
+        cv::GaussianBlur(input, output, kernelSize, 0.0, 0.0, cv::BORDER_DEFAULT);
+        return;
+    }
+
+    output.create(input.size(), input.type());
+
+    const int tileSize = 128;
+    const int tilesX = (input.cols + tileSize - 1) / tileSize;
+    const int tilesY = (input.rows + tileSize - 1) / tileSize;
+    const int totalTiles = tilesX * tilesY;
+
+    cv::parallel_for_(cv::Range(0, totalTiles), [&](const cv::Range& range)
+    {
+        for (int idx = range.start; idx < range.end; ++idx)
+        {
+            const int tileY = idx / tilesX;
+            const int tileX = idx % tilesX;
+
+            const int x = tileX * tileSize;
+            const int y = tileY * tileSize;
+            const int w = std::min(tileSize, input.cols - x);
+            const int h = std::min(tileSize, input.rows - y);
+
+            const cv::Rect tileRect(x, y, w, h);
+            const cv::Rect expandedRect(
+                std::max(0, x - radius),
+                std::max(0, y - radius),
+                std::min(input.cols - std::max(0, x - radius), w + 2 * radius),
+                std::min(input.rows - std::max(0, y - radius), h + 2 * radius));
+
+            const cv::Mat tileInput = input(expandedRect);
+            cv::Mat tileBlurred;
+            cv::GaussianBlur(tileInput, tileBlurred, kernelSize, 0.0, 0.0, cv::BORDER_DEFAULT);
+
+            const int offsetX = x - expandedRect.x;
+            const int offsetY = y - expandedRect.y;
+            const cv::Rect copyRect(offsetX, offsetY, w, h);
+            tileBlurred(copyRect).copyTo(output(tileRect));
+        }
+    });
 }
 
 static bool TryEncodeImage(const cv::Mat& input, EEncodingType encoding, std::vector<unsigned char>& output)
@@ -71,7 +116,9 @@ EXPORTED_METHOD unsigned char* __cdecl ProcessImage(
 
     if (blur)
     {
-        ApplyGaussianBlur(image);
+        cv::Mat blurred;
+        ApplyGaussianBlur(image, blurred);
+        image = blurred;
     }
 
     std::vector<unsigned char> encoded;
