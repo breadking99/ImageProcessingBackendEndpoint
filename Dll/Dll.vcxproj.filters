@@ -15,6 +15,9 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Exports.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="Types.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -38,11 +41,5 @@
     <ClCompile Include="pch.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="cpp.hint" />
   </ItemGroup>
 </Project>
