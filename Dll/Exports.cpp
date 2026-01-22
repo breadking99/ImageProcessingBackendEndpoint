@@ -1,6 +1,6 @@
 // Exports.cpp : C ABI exports used by the managed layer.
 #include "pch.h"
-#include "DllExports.h"
+#include "Exports.h"
 #include "ImageProcessing.h"
 #include <cstdlib>
 #include <cstring>
@@ -67,11 +67,12 @@ EXPORTED_METHOD unsigned char* __cdecl ProcessImage(
 
     // Run the OpenCV pipeline and return the encoded bytes.
     std::vector<unsigned char> encoded;
-    if (!TryProcessImage(input, inputLength, encoding, blur, encoded))
+    if (!ImageProcessor::TryProcessImage(input, inputLength, encoding, blur, encoded))
     {
         *outputLength = 0;
         return nullptr;
     }
 
+    // Marshal the output bytes to a native buffer for the caller.
     return AllocateAndCopy(encoded, outputLength);
 }

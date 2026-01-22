@@ -1,13 +1,9 @@
 #pragma once
 
+#include "Types.h"
+
 // Exported C ABI used by the C# P/Invoke layer.
 #define EXPORTED_METHOD extern "C" __declspec(dllexport)
-
-enum EEncodingType
-{
-    PNG,
-    JPG
-};
 
 // Returns value * 2 (simple smoke-test export).
 EXPORTED_METHOD int __cdecl MultipleByTwo(int value);

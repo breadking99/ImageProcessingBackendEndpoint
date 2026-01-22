@@ -148,14 +148,15 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="DllExports.h" />
-    <ClInclude Include="framework.h" />
-    <ClInclude Include="ImageProcessing.h" />
+    <ClInclude Include="Exports.h" />
     <ClInclude Include="pch.h" />
+    <ClInclude Include="TileGrid.h" />
+    <ClInclude Include="Types.h" />
+    <ClInclude Include="ImageProcessing.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="DllMain.cpp" />
     <ClCompile Include="Exports.cpp" />
+    <ClCompile Include="Main.cpp" />
     <ClCompile Include="ImageProcessing.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
