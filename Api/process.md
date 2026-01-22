@@ -22,3 +22,8 @@
 7. Downloading and installing OpenCV
   - configuring project to use OpenCV
 8. Implemeting the image processing function with the help of AI Agents
+9. Testing
+10. Documentation
+
+Note:
+- I used AI agents the most at implementing the image processing function at step 8, then at tests and documentation
