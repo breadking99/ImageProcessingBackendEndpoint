@@ -10,9 +10,6 @@ public static class DllNative
     [DllImport(DllPath)]
     public static extern int MultipleByTwo(int value);
 
-    public static Stream ProcessImage(Stream imageStream, EEncodingType encoding)
-    {
-        // Placeholder for actual native image processing logic
-        return imageStream;
-    }
+    [DllImport(DllPath)]
+    public static extern void FreeBuffer(IntPtr p);
 }

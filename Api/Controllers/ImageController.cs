@@ -9,28 +9,13 @@ namespace Api.Controllers;
 public class ImageController : ControllerBase
 {
     [HttpPost("processing")]
-    public IActionResult Post_Processing(IFormFile file, EEncodingType encoding)
+    public IActionResult Post_Processing(string base64, EEncodingType encoding)
     {
-        bool isAcceptableType = false;
+        if (string.IsNullOrWhiteSpace(base64)) return BadRequest("Base64 string is null or empty.");
 
-        foreach (EEncodingType type in Enum.GetValues<EEncodingType>())
-        {
-            bool isMatch = type
-                .PossibleContentTypes()
-                .Any(x => x.Equals(file.ContentType, StringComparison.OrdinalIgnoreCase));
+        var decodedBytes = Convert.FromBase64String(base64);
 
-            if (isMatch) isAcceptableType = true;
-        }
-
-        if (!isAcceptableType) return BadRequest("Unsupported encoding type.");
-
-        Stream stream = file.OpenReadStream();
-        stream = DllNative.ProcessImage(stream, encoding);
-        string contenType = encoding
-            .PossibleContentTypes()
-            .FirstOrDefault() ?? "image/png";
-
-        return File(stream, contenType);
+        return Ok();
     }
 
     [HttpGet("test/multiple-by-two")]
@@ -40,4 +25,7 @@ public class ImageController : ControllerBase
 
 		return Ok(new { input = value, output = result });
     }
+
+    private ObjectResult InternalServerError(string message) =>
+        StatusCode(StatusCodes.Status500InternalServerError, message);
 }

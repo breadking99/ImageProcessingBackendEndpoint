@@ -1,11 +1,25 @@
 // dllmain.cpp : Defines the entry point for the DLL application.
 #include "pch.h"
+#include <cstddef>
+#include <cstring>
+#include <cstdlib>
 
 #define EXPORTED_METHOD extern "C" __declspec(dllexport)
 
-EXPORTED_METHOD int MultipleByTwo(int value)
+EXPORTED_METHOD int __cdecl MultipleByTwo(int value)
 {
 	return value * 2;
+}
+
+enum EEncodingType
+{
+    PNG,
+    JPG
+};
+
+EXPORTED_METHOD void __cdecl FreeBuffer(void* p)
+{
+	std::free(p);
 }
 
 BOOL APIENTRY DllMain( HMODULE hModule,
