@@ -16,8 +16,8 @@ Validates the API controller behavior and native image processing output.
   - Compares blurred output to `-blur` expected files.
 
 ## Naming Conventions
-- Base64 keys should match sample file names, e.g. `emoji1.png`.
-- Blurred outputs use `-blur` suffix, e.g. `emoji1-blur.png`.
+- Base64 keys should match sample file names, e.g. `apple.png`.
+- Blurred outputs use `-blur` suffix, e.g. `apple-blur.png`.
 
 ## Tolerances
 Pixel comparisons use tolerances to handle encoder differences:
@@ -43,12 +43,12 @@ Az API controller viselkedésének és a natív képfeldolgozás kimenetének el
   - Elmosott kimenet összehasonlítása `-blur` fájlokkal.
 
 ### Névkonvenciók
-- A base64 kulcsok egyezzenek a fájlnevekkel, pl. `emoji1.png`.
-- Az elmosott kimenetek `-blur` utótagot kapnak, pl. `emoji1-blur.png`.
+- A base64 kulcsok egyezzenek a fájlnevekkel, pl. `apple.png`.
+- Az elmosott kimenetek `-blur` utótagot kapnak, pl. `apple-blur.png`.
 
 ### Toleranciák
 A pixel összehasonlítás toleranciákat használ:
 - PNG: `0, 0.0` (pontos)
-- JPG: `12, 0.05` (lossy)
+- JPG: `12, 0.05` (veszteséges)
 
 Szükség esetén módosítsd az `InlineData` értékeket.
