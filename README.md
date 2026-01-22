@@ -33,3 +33,38 @@ The API build copies `Dll.dll` and the required OpenCV runtime DLLs into its out
    - `dotnet test Tests/Tests.csproj -c Debug`
 
 Pixel comparisons use tolerances to account for encoder differences. See `Tests/README.md` for details.
+
+## Magyar
+### Áttekintés
+Ez a repó egy leegyszerűsített képfeldolgozó backendet tartalmaz:
+- **Api**: ASP.NET Web API REST végpontokkal.
+- **Dll**: natív C++ DLL, amely képet dekódol, opcionálisan Gaussian blur-t alkalmaz, majd újraenkódol.
+- **Tests**: C# tesztprojekt minta-alapú tesztekkel.
+
+### Projekt felépítése
+- `Api`: C# Web API projekt.
+- `Dll`: C++ natív DLL projekt (OpenCV).
+- `Tests`: xUnit tesztek és minta képek.
+
+### Követelmények
+- Visual Studio C++ és .NET workloadokkal.
+- .NET SDK 10.0 (preview) vagy az aktuálisan használt SDK.
+- vcpkg + OpenCV:
+  - `vcpkg install opencv4:x64-windows`
+  - `vcpkg integrate install`
+  - Állítsd be a `VCPKG_ROOT` változót (pl. `C:\dev\vcpkg`).
+
+### Build és futtatás
+1. Építsd a natív DLL-t (x64 konfiguráció).
+2. Építsd és futtasd az API-t (x64 konfiguráció).
+3. Nyisd meg a Swagger UI-t a böngészőben: `/swagger`.
+
+Az API build átmásolja a `Dll.dll`-t és a szükséges OpenCV futtatási DLL-eket az output mappába.
+
+### Tesztek
+1. Minta képek: `Tests/Samples`.
+2. Base64 stringek: `Tests/Helpers/SampleBase64Data.cs`.
+3. Futtatás Visual Studio-ból vagy:
+   - `dotnet test Tests/Tests.csproj -c Debug`
+
+A pixel összehasonlítás toleranciákat használ. Részletek: `Tests/README.md`.

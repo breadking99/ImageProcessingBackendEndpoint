@@ -25,3 +25,30 @@ Pixel comparisons use tolerances to handle encoder differences:
 - JPG: `12, 0.05` (lossy)
 
 Adjust tolerances in `InlineData` if needed.
+
+## Magyar
+### Cél
+Az API controller viselkedésének és a natív képfeldolgozás kimenetének ellenőrzése.
+
+### Adatforrások
+- Base64 stringek: `Tests/Helpers/SampleBase64Data.cs`
+- Minta fájlok: `Tests/Samples`
+
+### Teszt osztályok
+- `Base64ToImageTests`:
+  - Base64 mintákat használ és a kimeneti pixeleket hasonlítja a várt fájlokhoz.
+- `ChangeEncodingTests`:
+  - PNG <-> JPG konverzió, pixel összehasonlítással.
+- `BlurTests`:
+  - Elmosott kimenet összehasonlítása `-blur` fájlokkal.
+
+### Névkonvenciók
+- A base64 kulcsok egyezzenek a fájlnevekkel, pl. `emoji1.png`.
+- Az elmosott kimenetek `-blur` utótagot kapnak, pl. `emoji1-blur.png`.
+
+### Toleranciák
+A pixel összehasonlítás toleranciákat használ:
+- PNG: `0, 0.0` (pontos)
+- JPG: `12, 0.05` (lossy)
+
+Szükség esetén módosítsd az `InlineData` értékeket.
