@@ -20,3 +20,5 @@
   - edited the Api project file, so if it rebuilds, it copies the Dll to the output folder
 6. A bit missinterpreted the task, so I redesigned the controller
 7. Downloading and installing OpenCV
+  - configuring project to use OpenCV
+8. Implemeting the image processing function with the help of AI Agents

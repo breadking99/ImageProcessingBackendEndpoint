@@ -9,16 +9,21 @@
 
 #define EXPORTED_METHOD extern "C" __declspec(dllexport)
 
-EXPORTED_METHOD int __cdecl MultipleByTwo(int value)
-{
-	return value * 2;
-}
-
 enum EEncodingType
 {
     PNG,
     JPG
 };
+
+EXPORTED_METHOD int __cdecl MultipleByTwo(int value)
+{
+	return value * 2;
+}
+
+EXPORTED_METHOD void __cdecl FreeBuffer(void* p)
+{
+    std::free(p);
+}
 
 static bool TryDecodeImage(const unsigned char* input, int inputLength, cv::Mat& output)
 {
@@ -88,12 +93,7 @@ EXPORTED_METHOD unsigned char* __cdecl ProcessImage(
     return output;
 }
 
-EXPORTED_METHOD void __cdecl FreeBuffer(void* p)
-{
-	std::free(p);
-}
-
-BOOL APIENTRY DllMain( HMODULE hModule,
+static BOOL APIENTRY DllMain( HMODULE hModule,
                        DWORD  ul_reason_for_call,
                        LPVOID lpReserved
                      )
@@ -108,4 +108,3 @@ BOOL APIENTRY DllMain( HMODULE hModule,
     }
     return TRUE;
 }
-

@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Api.Native.DllNative">
+    <Position X="3.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAgADAAAAAAA=</HashCode>
+      <FileName>Native\DllNative.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Api.Extensions.EncodingTypeExtension">
+    <Position X="0.5" Y="2" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAA=</HashCode>
+      <FileName>Extensions\EncodingTypeExtension.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Api.Controllers.ImageController">
+    <Position X="5.5" Y="0.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>BAAAAABIAAAgAAAAAAAAAAAAAAAEAAAAAAABAAAAAAA=</HashCode>
+      <FileName>Controllers\ImageController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Enum Name="Api.Enums.EEncodingType">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAEAEAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Enums\EEncodingType.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

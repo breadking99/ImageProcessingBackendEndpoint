@@ -1,17 +1,12 @@
 ﻿namespace Api.Enums;
 
+/// <summary>
+/// Specifies the image encoding formats supported for output operations.
+/// </summary>
+/// <remarks>Use this enumeration to indicate the desired image format when saving or exporting images. The
+/// available options correspond to commonly used image file types.</remarks>
 public enum EEncodingType
 {
     PNG,
     JPG
-}
-
-public static class EncodingTypeExtension
-{
-    public static string[] PossibleContentTypes(this EEncodingType encodingType) => encodingType switch
-    {
-        EEncodingType.PNG => ["image/png"],
-        EEncodingType.JPG => ["image/jpg", "image/jpeg"],
-        _ => throw new NotImplementedException()
-    };
 }
