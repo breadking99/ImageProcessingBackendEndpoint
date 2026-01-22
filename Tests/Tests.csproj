@@ -5,6 +5,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <IsPackable>false</IsPackable>
+    <PlatformTarget>x64</PlatformTarget>
   </PropertyGroup>
 
   <ItemGroup>
@@ -17,5 +18,27 @@
   <ItemGroup>
     <Using Include="Xunit" />
   </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Api\Api.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Samples\**\*.*">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <Target Name="CopyNativeDllToOutput" AfterTargets="Build">
+    <ItemGroup>
+      <_NativeDll Include="$(SolutionDir)$(Platform)\$(Configuration)\Dll.dll" Condition="Exists('$(SolutionDir)$(Platform)\$(Configuration)\Dll.dll')" />
+      <_NativeDll Include="$(SolutionDir)x64\$(Configuration)\Dll.dll" Condition="'$(Platform)' == 'AnyCPU' and Exists('$(SolutionDir)x64\$(Configuration)\Dll.dll')" />
+      <_VcpkgRuntimeDlls Include="$(VCPKG_ROOT)\installed\x64-windows\bin\*.dll" Condition="'$(Configuration)' == 'Release' and Exists('$(VCPKG_ROOT)\installed\x64-windows\bin')" />
+      <_VcpkgRuntimeDlls Include="$(VCPKG_ROOT)\installed\x64-windows\debug\bin\*.dll" Condition="'$(Configuration)' == 'Debug' and Exists('$(VCPKG_ROOT)\installed\x64-windows\debug\bin')" />
+    </ItemGroup>
+
+    <Copy SourceFiles="@(_NativeDll)" DestinationFolder="$(OutDir)" SkipUnchangedFiles="true" />
+    <Copy SourceFiles="@(_VcpkgRuntimeDlls)" DestinationFolder="$(OutDir)" SkipUnchangedFiles="true" />
+  </Target>
 
 </Project>
