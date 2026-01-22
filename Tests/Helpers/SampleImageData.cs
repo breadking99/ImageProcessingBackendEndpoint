@@ -22,6 +22,17 @@ public static class SampleImageData
     }
 
     /// <summary>
+    /// Returns the expected blurred file name by appending "-blur" before the extension.
+    /// </summary>
+    public static string GetBlurredFileName(string fileName)
+    {
+        ArgumentException.ThrowIfNullOrWhiteSpace(fileName);
+        var extension = Path.GetExtension(fileName);
+        var name = Path.GetFileNameWithoutExtension(fileName);
+        return $"{name}-blur{extension}";
+    }
+
+    /// <summary>
     /// Reads the file bytes for a sample image.
     /// </summary>
     public static byte[] GetSampleBytes(string fileName)
@@ -61,5 +72,17 @@ public static class SampleImageData
 
         bytes = File.ReadAllBytes(path);
         return true;
+    }
+
+    /// <summary>
+    /// Infers a MIME content type from the file extension.
+    /// </summary>
+    public static string GetContentType(string fileName)
+    {
+        var extension = Path.GetExtension(fileName);
+        return extension.Equals(".jpg", StringComparison.OrdinalIgnoreCase) ||
+               extension.Equals(".jpeg", StringComparison.OrdinalIgnoreCase)
+            ? "image/jpeg"
+            : "image/png";
     }
 }
