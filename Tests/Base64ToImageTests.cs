@@ -16,7 +16,7 @@ public class Base64ToImageTests
     [InlineData("emoji1.png", "emoji1.png", EEncodingType.PNG, 0, 0.0)]
     [InlineData("emoji2.png", "emoji2.png", EEncodingType.PNG, 0, 0.0)]
     [InlineData("emoji3.png", "emoji3.png", EEncodingType.PNG, 0, 0.0)]
-    public void Base64Samples_ReturnExpectedFiles(
+    public async Task Base64Samples_ReturnExpectedFiles(
         string base64Key,
         string expectedFile,
         EEncodingType encoding,
@@ -35,7 +35,7 @@ public class Base64ToImageTests
 
         var controller = new ImageController();
 
-        var result = controller.Post_Processing(base64, encoding, blur: false);
+        var result = await controller.Post_Processing(base64, encoding, blur: false, cancellationToken: CancellationToken.None);
 
         var fileResult = Assert.IsType<FileContentResult>(result.Result);
         var options = new ImageComparisonOptions(maxPerChannelDifference, maxDifferentPixelRatio);

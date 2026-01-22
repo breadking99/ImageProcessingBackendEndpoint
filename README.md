@@ -34,6 +34,9 @@ The API build copies `Dll.dll` and the required OpenCV runtime DLLs into its out
 
 Pixel comparisons use tolerances to account for encoder differences. See `Tests/README.md` for details.
 
+## Async and Cancellation
+File uploads are processed asynchronously, and endpoints accept a `CancellationToken` for cooperative cancellation.
+
 ## Magyar
 ### Áttekintés
 Ez a repó egy leegyszerűsített képfeldolgozó backendet tartalmaz:
@@ -68,3 +71,6 @@ Az API build átmásolja a `Dll.dll`-t és a szükséges OpenCV futtatási DLL-e
    - `dotnet test Tests/Tests.csproj -c Debug`
 
 A pixel összehasonlítás toleranciákat használ. Részletek: `Tests/README.md`.
+
+## Aszinkron és megszakítás
+A fájlfeltöltések aszinkron módon kerülnek feldolgozásra, a végpontok `CancellationToken`-t is fogadnak.

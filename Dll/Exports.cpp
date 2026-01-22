@@ -35,12 +35,6 @@ namespace
     }
 }
 
-// Simple smoke-test export to validate P/Invoke.
-EXPORTED_METHOD int __cdecl MultipleByTwo(int value)
-{
-    return value * 2;
-}
-
 // Releases memory allocated by AllocateAndCopy.
 EXPORTED_METHOD void __cdecl FreeBuffer(void* p)
 {

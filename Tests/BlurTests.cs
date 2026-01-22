@@ -13,7 +13,7 @@ public class BlurTests
     [Theory]
     [InlineData("apple.png", EEncodingType.PNG, 12, 0.05)]
     [InlineData("apple.jpg", EEncodingType.JPG, 12, 0.05)]
-    public void SampleFiles_Blurred(
+    public async Task SampleFiles_Blurred(
         string inputFile,
         EEncodingType encoding,
         int maxPerChannelDifference,
@@ -39,7 +39,7 @@ public class BlurTests
 
         var controller = new ImageController();
 
-        var result = controller.Post_Converting(file, encoding, blur: true);
+        var result = await controller.Post_Converting(file, encoding, blur: true, cancellationToken: CancellationToken.None);
 
         var fileResult = Assert.IsType<FileContentResult>(result.Result);
         var options = new ImageComparisonOptions(maxPerChannelDifference, maxDifferentPixelRatio);

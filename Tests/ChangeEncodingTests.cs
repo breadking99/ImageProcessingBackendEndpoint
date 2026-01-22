@@ -18,7 +18,7 @@ public class ChangeEncodingTests
     [InlineData("flower.png", "flower.jpg", EEncodingType.JPG, 12, 0.05)]
     [InlineData("apple.jpg", "apple.png", EEncodingType.PNG, 12, 0.05)]
     [InlineData("flower.jpg", "flower.png", EEncodingType.PNG, 12, 0.05)]
-    public void SampleFiles_CanBeReencoded(
+    public async Task SampleFiles_CanBeReencoded(
         string inputFile,
         string expectedFile,
         EEncodingType targetEncoding,
@@ -44,7 +44,7 @@ public class ChangeEncodingTests
 
         var controller = new ImageController();
 
-        var result = controller.Post_Converting(file, targetEncoding, blur: false);
+        var result = await controller.Post_Converting(file, targetEncoding, blur: false, cancellationToken: CancellationToken.None);
 
         var fileResult = Assert.IsType<FileContentResult>(result.Result);
         var options = new ImageComparisonOptions(maxPerChannelDifference, maxDifferentPixelRatio);

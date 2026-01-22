@@ -4,7 +4,6 @@
 Native C++ DLL that performs image decoding, optional Gaussian blur, and re-encoding.
 
 ## Exports
-- `MultipleByTwo(int value)` - simple smoke-test export.
 - `ProcessImage(...)` - decodes image bytes, optionally blurs, and encodes output.
 - `FreeBuffer(void* p)` - frees buffers allocated by the DLL.
 
@@ -25,7 +24,6 @@ parallel processing to use available CPU cores.
 Natív C++ DLL, amely képet dekódol, opcionálisan Gaussian blur-t alkalmaz, majd újraenkódol.
 
 ### Exportok
-- `MultipleByTwo(int value)` - egyszerű teszt export.
 - `ProcessImage(...)` - dekódol, opcionálisan blur-t alkalmaz, majd enkódol.
 - `FreeBuffer(void* p)` - felszabadítja a DLL által foglalt memóriát.
 

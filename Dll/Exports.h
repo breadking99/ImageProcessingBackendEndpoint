@@ -5,9 +5,6 @@
 // Exported C ABI used by the C# P/Invoke layer.
 #define EXPORTED_METHOD extern "C" __declspec(dllexport)
 
-// Returns value * 2 (simple smoke-test export).
-EXPORTED_METHOD int __cdecl MultipleByTwo(int value);
-
 // Frees a buffer allocated by this DLL.
 EXPORTED_METHOD void __cdecl FreeBuffer(void* p);
 

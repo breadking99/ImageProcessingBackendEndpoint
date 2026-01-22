@@ -23,16 +23,7 @@ public static class DllNative
     const string DllPath = @"Dll.dll";
     #endregion
 
-    #region METHODS [MultipleByTwo, FreeBuffer, ProcessImage]
-    /// <summary>
-    /// Multiplies the specified integer value by two using the native library.
-    /// </summary>
-    /// <remarks>This method is implemented in unmanaged code. Ensure that the native library specified by
-    /// DllPath is available at runtime.</remarks>
-    /// <param name="value">The integer value to be multiplied by two.</param>
-    /// <returns>The result of multiplying the specified value by two.</returns>
-    [DllImport(DllPath)] public static extern int MultipleByTwo(int value);
-
+    #region METHODS [FreeBuffer, ProcessImage]
     /// <summary>
     /// Releases the unmanaged memory buffer referenced by the specified pointer.
     /// </summary>
