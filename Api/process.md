@@ -18,4 +18,5 @@
   - added a multiple by two test function in the DLL
   - imported the function with DllImport in the controller with help DllNative static class
   - edited the Api project file, so if it rebuilds, it copies the Dll to the output folder
-6. Limit what file types can be uploaded in the controller
+6. A bit missinterpreted the task, so I redesigned the controller
+7. Downloading and installing OpenCV

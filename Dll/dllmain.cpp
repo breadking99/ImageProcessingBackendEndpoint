@@ -3,6 +3,9 @@
 #include <cstddef>
 #include <cstring>
 #include <cstdlib>
+#include <vector>
+#include <opencv2/imgcodecs.hpp>
+#include <opencv2/imgproc.hpp>
 
 #define EXPORTED_METHOD extern "C" __declspec(dllexport)
 
@@ -17,11 +20,35 @@ enum EEncodingType
     JPG
 };
 
+static bool TryDecodeImage(const unsigned char* input, int inputLength, cv::Mat& output)
+{
+    if (!input || inputLength <= 0)
+    {
+        return false;
+    }
+
+    std::vector<unsigned char> buffer(input, input + inputLength);
+    output = cv::imdecode(buffer, cv::IMREAD_UNCHANGED);
+    return !output.empty();
+}
+
+static void ApplyGaussianBlur(cv::Mat& image)
+{
+    cv::setNumThreads(cv::getNumberOfCPUs());
+    cv::GaussianBlur(image, image, cv::Size(5, 5), 0.0, 0.0, cv::BORDER_DEFAULT);
+}
+
+static bool TryEncodeImage(const cv::Mat& input, EEncodingType encoding, std::vector<unsigned char>& output)
+{
+    const char* extension = encoding == JPG ? ".jpg" : ".png";
+    return cv::imencode(extension, input, output);
+}
+
 EXPORTED_METHOD unsigned char* __cdecl ProcessImage(
     const unsigned char* input,
     int inputLength,
-    EEncodingType /*encoding*/,
-    bool /*blur*/,
+    EEncodingType encoding,
+    bool blur,
     int* outputLength)
 {
     if (!input || inputLength <= 0 || !outputLength)
@@ -30,15 +57,34 @@ EXPORTED_METHOD unsigned char* __cdecl ProcessImage(
         return nullptr;
     }
 
-    auto* output = static_cast<unsigned char*>(std::malloc(static_cast<size_t>(inputLength)));
+    cv::Mat image;
+    if (!TryDecodeImage(input, inputLength, image))
+    {
+        *outputLength = 0;
+        return nullptr;
+    }
+
+    if (blur)
+    {
+        ApplyGaussianBlur(image);
+    }
+
+    std::vector<unsigned char> encoded;
+    if (!TryEncodeImage(image, encoding, encoded))
+    {
+        *outputLength = 0;
+        return nullptr;
+    }
+
+    auto* output = static_cast<unsigned char*>(std::malloc(encoded.size()));
     if (!output)
     {
         *outputLength = 0;
         return nullptr;
     }
 
-    std::memcpy(output, input, static_cast<size_t>(inputLength));
-    *outputLength = inputLength;
+    std::memcpy(output, encoded.data(), encoded.size());
+    *outputLength = static_cast<int>(encoded.size());
     return output;
 }
 
